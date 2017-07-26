@@ -20,22 +20,18 @@ function printfile()
 else printf("<table  border=1px>
 <thead>
     <tr>       
-        <th>Название файла</th>
-        <th>Размер</th>
-        <th>Удалить</th>
+        <th>Назва файлу</th>
+        <th>Розмір</th>
+        <th>Видалити</th>
     </tr>
 	
 </thead>");
-/*foreach ($f as $file){
-	if (!is_dir(UPLOADDIR.'/'.$file)){
-	$size = filesize(UPLOADDIR.'/'.$file);
-	printf('<tr><td></td><td>'.$size.'</td><td></td></tr>');
-}}*/
 	foreach ($f as $file){
 		
     if (!is_dir(UPLOADDIR.'/'.$file)){
 		$size = filesize(UPLOADDIR.'/'.$file);
-      printf('<tr><td>'.$file.'</td><td>'.$size.' B</td><td><input type="button" value="Del"/></td></tr>');
+      printf('<tr><td>'.$file.'</td><td>'.$size.' B</td><td><a href="index.php?name=' . $file . '">Delete</a></td></tr>');
+	  //echo $file." ".$size."<br>";
     }
 	
 }
@@ -43,6 +39,12 @@ else printf("<table  border=1px>
    };
 function delfiles()
 {
+	
+	//print_r($_GET);exit;
+	 
+   if(file_exists(UPLOADDIR . '/' . $_GET['name'])) {
+      unlink(UPLOADDIR . '/' . $_GET['name']);
+   }
 
 };
 
