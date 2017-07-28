@@ -1,5 +1,6 @@
 ﻿<?php
 include('config.php');
+
 function upload()
 {
   if(is_uploaded_file($_FILES["upload"]["tmp_name"]))  
@@ -15,6 +16,47 @@ function upload()
 };
 function printfile()
    {
+	   function get_filesize($file)
+{
+  
+    if(!file_exists($file)) return "Файл  не найден";
+   
+  $filesize = filesize($file);
+   
+   if($filesize > 1024)
+   {
+       $filesize = ($filesize/1024);
+       
+       if($filesize > 1024)
+       {
+            $filesize = ($filesize/1024);
+        
+           if($filesize > 1024)
+           {
+               $filesize = ($filesize/1024);
+               $filesize = round($filesize, 1);
+               return $filesize." ГБ";       
+           }
+           else
+           {
+               $filesize = round($filesize, 1);
+               return $filesize." MБ";   
+           }       
+       }
+       else
+       {
+           $filesize = round($filesize, 1);
+           return $filesize." Кб";   
+       }  
+   }
+   else
+   {
+       $filesize = round($filesize, 1);
+       return $filesize." байт";   
+   }
+}
+
+
 	$f = scandir(UPLOADDIR);
 	if($f == false) printf("Каталог пуст");
 else printf("<table  border=1px>
@@ -29,8 +71,8 @@ else printf("<table  border=1px>
 	foreach ($f as $file){
 		
     if (!is_dir(UPLOADDIR.'/'.$file)){
-		$size = filesize(UPLOADDIR.'/'.$file);
-      printf('<tr><td>'.$file.'</td><td>'.$size.' B</td><td><a href="index.php?name=' . $file . '">Delete</a></td></tr>');
+		$size = get_filesize(UPLOADDIR.'/'.$file);
+      printf('<tr><td>'.$file.'</td><td>'.$size.'</td><td><a href="index.php?name=' . $file . '">Delete</a></td></tr>');
 	  //echo $file." ".$size."<br>";
     }
 	

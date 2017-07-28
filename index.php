@@ -3,7 +3,8 @@
 include('config.php');
 include('libs/functions.php');
 if (isset($_GET['name'])){
-delfiles();}
+	delfiles();
+	}
 upload();
 printfile();
 
